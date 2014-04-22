@@ -1,0 +1,9 @@
+dependencies {
+	compile ('com.google.gwt:gwt-user:2.6.0') {
+		transitive false
+	}
+	compile ('com.google.gwt:gwt-dev:2.6.0') {
+		transitive false
+	}
+
+}
