@@ -5,12 +5,7 @@ SyntaxHighlighter-GWT
 
 GWT Wrapper around [SyntaxHighlighter system](http://alexgorbatchev.com/SyntaxHighlighter/), provided by Alex Gorbatchev
 
-Based on the GWT Wrapper at https://code.google.com/p/gwt-syntaxhighlighter/ that is out of date.
-
-Updated with minor fixes and now uses gradle.
-
-
-
+Based loosely around https://code.google.com/p/gwt-syntaxhighlighter/.   It has been largely rewritten for simplicity.
 
 Usage:
 
@@ -21,9 +16,8 @@ In YourModule.gwt.xml
 
 In Java
 ```Java
-Highlighter.loadBrushes(Brush.Brushes.XML());
+
+SyntaxHighlighter highlighter = new SyntaxHighlighter(Brushes.XML, "<test>\n  <item></item>\n</test>");
 		
-Highlighter highlighter = new Highlighter(Brush.Brushes.XML(), "<test>\n  <item></item>\n</test>");
-		
-RootLayoutPanel.get().add(highlighter);
+somePanel.add(highlighter);
 ```
