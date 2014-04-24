@@ -9,6 +9,12 @@ Based loosely around https://code.google.com/p/gwt-syntaxhighlighter/.   It has 
 
 Usage:
 
+In Gradle
+```Groovy
+compile 'com.alexgorbatchev:syntaxhighlighter-gwt:0.2.1'
+compile group:'com.alexgorbatchev', name:'syntaxhighlighter-gwt', version:'0.2.1', classifier:'sources'
+```
+
 In YourModule.gwt.xml
 ```XML
 <inherits name='com.alexgorbatchev.syntaxhighlighter.Highlighter'/>
