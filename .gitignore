@@ -1,0 +1,12 @@
+bin
+build
+.classpath
+.gitignore
+.gradle
+.project
+.settings
+classes
+syntaxhighlighter-gwt-test/war/WEB-INF/lib/
+syntaxhighlighter-gwt-test/gwt-unitCache/
+syntaxhighlighter-gwt-test/war/SyntaxHighlighterGWTTest/
+syntaxhighlighter-gwt-test/war/WEB-INF/deploy/
