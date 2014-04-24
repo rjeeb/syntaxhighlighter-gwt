@@ -80,6 +80,7 @@ public class SyntaxHighlighter extends Widget implements HasText {
 				String brushJs = brushJsTextResource.getText();
 				ScriptInjector.fromString(brushJs).inject();
 			}
+			brushesLoaded.add(brush.getAlias());
 		}
 	}
 	
