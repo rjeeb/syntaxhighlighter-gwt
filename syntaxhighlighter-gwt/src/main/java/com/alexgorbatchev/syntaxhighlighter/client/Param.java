@@ -3,7 +3,6 @@ package com.alexgorbatchev.syntaxhighlighter.client;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.logging.Logger;
 
 /**
  * Enum designed to hold the set of parameters to be used by the
@@ -15,17 +14,26 @@ import java.util.logging.Logger;
  *      syntaxhighlighterdefaults
  */
 enum Param {
-
-	AUTO_LINKS("auto-links"), CLASS_NAME("class-name"), COLLAPSE("collapse"), FIRST_LINE(
-			"first-line"), GUTTER("gutter"), HIGHLIGHT("highlight"), HTML_SCRIPT(
-			"html-script"), LIGHT("light"), PAD_LINE_NUMBERS("pad-line-numbers"), QUICK_CODE(
-			"quick-code"), SMART_TABS("smart-tabs"), TAB_SIZE("tab-size"), TOOLBAR(
-			"toolbar"), TITLE("title");
+	
+	AUTO_LINKS("auto-links"),
+	CLASS_NAME("class-name"),
+	COLLAPSE("collapse"),
+	FIRST_LINE("first-line"),
+	GUTTER("gutter"),
+	HIGHLIGHT("highlight"),
+	HTML_SCRIPT("html-script"),
+	LIGHT("light"),
+	PAD_LINE_NUMBERS("pad-line-numbers"),
+	QUICK_CODE("quick-code"),
+	SMART_TABS("smart-tabs"),
+	TAB_SIZE("tab-size"),
+	TOOLBAR("toolbar"),
+	TITLE("title");
 	/**
 	 * The literal string used in the SyntaxHighlighter for this parameter.
 	 */
 	private final String jsString;
-
+	
 	/**
 	 * @param jsString
 	 *            {@link #jsString}
@@ -33,7 +41,7 @@ enum Param {
 	private Param(String jsString) {
 		this.jsString = jsString;
 	}
-
+	
 	/**
 	 * 
 	 * @return {@link #jsString}
@@ -41,7 +49,7 @@ enum Param {
 	final String getJsString() {
 		return jsString;
 	}
-
+	
 	/**
 	 * Makes the string to be used in the {@code <pre>} tag's class attribute
 	 * for this parameter. If the value is equal to the default value, then the
@@ -54,11 +62,12 @@ enum Param {
 	private final String makeString(String value) {
 		if (isDefault(value)) {
 			return "";
-		} else {
+		}
+		else {
 			return jsString + ": " + value + ";";
 		}
 	}
-
+	
 	/**
 	 * Tests to see if the given value is equal to the default value for this
 	 * parameter.
@@ -70,7 +79,7 @@ enum Param {
 	private final boolean isDefault(String value) {
 		return isDefault(this, value);
 	}
-
+	
 	/**
 	 * Tests to see if the given value is equal to the default value for the
 	 * given parameter.
@@ -84,7 +93,7 @@ enum Param {
 	private static final boolean isDefault(Param param, String value) {
 		return param.getDefault().equals(value);
 	}
-
+	
 	/**
 	 * 
 	 * @return the default for this parameter.
@@ -94,12 +103,7 @@ enum Param {
 		ret = getDefault(jsString);
 		return ret;
 	}
-
-	/**
-	 * The logger instance for the Param enum.
-	 */
-	private static final Logger log = Logger.getLogger(Param.class.getName());
-
+	
 	/**
 	 * JSNI method to get the default for the parameter.
 	 * @param param the {@link #jsString} for the parameter to look up.
@@ -114,20 +118,19 @@ enum Param {
 		}
 		return strVal;
 	}-*/;
-
+	
 	/**
 	 * Gets a map of the entire set of defaults for every parameter.
 	 * @return the map of defaults.
 	 */
 	static final Map<Param, String> getDefaults() {
-		log.finest("Getting the defaults for SyntaxHighlighter parameters.");
 		Map<Param, String> ret = new HashMap<Param, String>();
 		for (Param param : values()) {
 			ret.put(param, param.getDefault());
 		}
 		return ret;
 	}
-
+	
 	/**
 	 * Makes the entire string to be used as part of the {@code <pre>} tag's class, for
 	 * all parameters defined in the given map.
@@ -139,7 +142,7 @@ enum Param {
 		StringBuilder builder = new StringBuilder();
 		for (Entry<Param, String> entry : params.entrySet()) {
 			if (builder.length() > 0) {
-
+				
 				builder.append(" ");
 			}
 			builder.append(entry.getKey().makeString(entry.getValue()));

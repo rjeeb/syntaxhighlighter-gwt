@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.alexgorbatchev.syntaxhighlighter.client.brushes.Brush;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NodeList;
@@ -24,11 +25,11 @@ class Instance {
 	/**
 	 * Highlighter that this Instance belongs to.
 	 */
-	private final Highlighter highlighter;
+	private final SyntaxHighlighter highlighter;
 	/**
 	 * BrushImpl that is used for this Instance.
 	 */
-	private final BrushImpl brush;
+	private final Brush brush;
 	/**
 	 * Code that is highlighted in this Instance.
 	 */
@@ -54,7 +55,7 @@ class Instance {
 	 * @param code
 	 *            {@link #code}
 	 */
-	Instance(Highlighter highlighter, Map<Param, String> params, BrushImpl brush, String code) {
+	Instance(SyntaxHighlighter highlighter, Map<Param, String> params, Brush brush, String code) {
 		this.highlighter = highlighter;
 		this.brush = brush;
 		this.code = code;
@@ -150,7 +151,7 @@ class Instance {
 	 * 
 	 * @return {@link #highlighter}
 	 */
-	private Highlighter getHighlighter() {
+	private SyntaxHighlighter getHighlighter() {
 		return highlighter;
 	}
 	
@@ -160,7 +161,7 @@ class Instance {
 	 * @return the {@code <div>} element's parameters.
 	 */
 	private String createParams() {
-		String ret = brush + Param.makeString(params);
+		String ret = "brush: " + brush.getAlias() + "; " + Param.makeString(params);
 		return ret;
 	}
 	
@@ -405,39 +406,6 @@ class Instance {
 	}
 	
 	/**
-	 * Compares this Instance with another Object to determine equality. Returns true if and only if the other object is
-	 * another Instance, and the {@link #brush} and {@link #code} are equal.
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final Instance other = (Instance) obj;
-		if (this.brush != other.brush && (this.brush == null || !this.brush.equals(other.brush))) {
-			return false;
-		}
-		if ((this.code == null) ? (other.code != null) : !this.code.equals(other.code)) {
-			return false;
-		}
-		return true;
-	}
-	
-	/**
-	 * Generates the hashcode for this Instance, using the {@link #brush} and {@link #code} in the hash generation.
-	 */
-	@Override
-	public int hashCode() {
-		int hash = 3;
-		hash = 23 * hash + (this.brush != null ? this.brush.hashCode() : 0);
-		hash = 23 * hash + (this.code != null ? this.code.hashCode() : 0);
-		return hash;
-	}
-	
-	/**
 	 * Attempts to highlight this Instance. For the highlighting to work, the Instance's {@link #brush} must be
 	 * {@link BrushImpl#isLoaded() loaded}, the Instance can't already be highlighted, and there must be {@link #code}
 	 * to be highlighted. Once the Instance is highlighted, the resulting Element created by the SyntaxHighlighter is
@@ -445,7 +413,7 @@ class Instance {
 	 */
 	void highlight() {
 		
-		if (brush.isLoaded() && getCode() != null && !getCode().trim().isEmpty()) {
+		if (getCode() != null && !getCode().trim().isEmpty()) {
 			getHighlighter().makePre(createParams(), getCode());
 			
 			Element newElement = getHighlighter().getElement().getFirstChildElement();
@@ -465,14 +433,7 @@ class Instance {
 			}
 		}
 		else {
-			String logData = "Cannot highlight Instance, because:";
-			if (!brush.isLoaded()) {
-				logData += "\n* Brush isn't loaded yet.";
-			}
-			if (getCode() == null || !getCode().trim().isEmpty()) {
-				logData += "\n* Code is " + (getCode() == null ? "null" : "empty") + ".";
-			}
-			GWT.log(logData);
+			GWT.log("Cannot highlight Instance, because code is " + (getCode() == null ? "null" : "empty"));
 		}
 	}
 	
