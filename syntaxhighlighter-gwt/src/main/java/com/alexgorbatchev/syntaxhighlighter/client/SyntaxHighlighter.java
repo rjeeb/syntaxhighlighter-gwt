@@ -29,8 +29,6 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class SyntaxHighlighter extends Widget implements HasText {
 	
-	private static HashSet<String> brushesLoaded = new HashSet<String>();
-	
 	private static boolean init;
 	
 	/**
@@ -67,11 +65,13 @@ public class SyntaxHighlighter extends Widget implements HasText {
 			}
 			
 			String coreScript = CoreResources.INSTANCE.coreJavascript().getText();
-			ScriptInjector.fromString(coreScript).setRemoveTag(false).inject();
+			ScriptInjector.fromString(coreScript).inject();
 			
 			init = true;
 		}
 	}
+	
+	private static HashSet<String> brushesLoaded = new HashSet<String>();
 	
 	private static void loadBrushIfNeeded(Brush brush) {
 		if (!brushesLoaded.contains(brush.getAlias())) {

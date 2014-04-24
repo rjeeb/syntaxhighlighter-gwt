@@ -34,18 +34,31 @@ public class SyntaxHighlighterGWTTest implements EntryPoint {
 		
 		vp.add(highlighter2);
 		
-		Button button = new Button("Click Me");
+		Button button = new Button("Change Settings");
 		button.addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
 				
 				highlighter2.setFirstLine(4);
+				highlighter2.setToolbar(false);
 				highlighter2.highlight();
 			}
 		});
 		
 		vp.add(button);
+		
+		Button button2 = new Button("Change Text");
+		button2.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				highlighter2.setText("function myFunction() {\n alert(\"This is a test of the emergency broadcast system\")\n}");
+			}
+		});
+		
+		vp.add(button2);
 		
 		RootLayoutPanel.get().add(vp);
 		
