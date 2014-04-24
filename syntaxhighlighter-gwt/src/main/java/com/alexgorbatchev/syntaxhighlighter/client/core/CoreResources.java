@@ -9,7 +9,7 @@ public interface CoreResources extends ClientBundle {
 	
 	public final static CoreResources INSTANCE = GWT.create(CoreResources.class);
 	
-	@Source("shCore.js")
+	@Source("shCore.min.js")
 	TextResource coreJavascript();
 	
 	@CssResource.NotStrict
