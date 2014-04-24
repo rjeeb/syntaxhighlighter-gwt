@@ -81,6 +81,8 @@ public class SyntaxHighlighter extends Widget implements HasText {
 		setElement(Document.get().createDivElement());
 		myself = new Instance(this, Param.getDefaults(), brush, "");
 		
+		myself.setCode(text);
+		
 		addAttachHandler(new AttachEvent.Handler() {
 			@Override
 			public void onAttachOrDetach(final AttachEvent event) {

@@ -111,7 +111,7 @@ enum Param {
 	 */
 	private static final native String getDefault(String param)
 	/*-{
-		var dVal = $wnd.SyntaxHighlighter.defaults[param];
+		var dVal = SyntaxHighlighter.defaults[param];
 		var strVal = String(dVal);
 		if(dVal instanceof Object && dVal.constructor == Array) {
 			strVal = '[' + strVal + ']';

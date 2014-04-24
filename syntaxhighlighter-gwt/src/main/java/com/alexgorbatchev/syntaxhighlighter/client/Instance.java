@@ -417,9 +417,7 @@ class Instance {
 			getHighlighter().makePre(createParams(), getCode());
 			
 			Element newElement = getHighlighter().getElement().getFirstChildElement();
-			
-			doHighlight();
-			
+			doHighlight(newElement);
 			newElement = getHighlighter().getElement().getFirstChildElement();
 			
 			if (newElement.hasChildNodes() && newElement.getFirstChildElement().getId().startsWith("highlighter_")) {
@@ -449,14 +447,14 @@ class Instance {
 	 */
 	private static native void setHighlighterParam(String id, String param, String value)
 	/*-{
-		$wnd.SyntaxHighlighter.vars['highlighters'][id].params[param] = value;
+		SyntaxHighlighter.vars['highlighters'][id].params[param] = value;
 	}-*/;
 	
 	/**
 	 * JSNI method to perform a highlight of the Instance(s) that need to be highlighted.
 	 */
-	private static native void doHighlight()
+	private static native void doHighlight(Element newElement)
 	/*-{
-		$wnd.SyntaxHighlighter.highlight();
+		SyntaxHighlighter.highlight({}, newElement);
 	}-*/;
 }
