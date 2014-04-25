@@ -1,6 +1,7 @@
 package com.alexgorbatchev.syntaxhighlighter.client;
 
 import com.alexgorbatchev.syntaxhighlighter.client.brushes.Brushes;
+import com.alexgorbatchev.syntaxhighlighter.client.themes.Themes;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.GWT.UncaughtExceptionHandler;
@@ -26,11 +27,15 @@ public class SyntaxHighlighterGWTTest implements EntryPoint {
 		VerticalPanel vp = new VerticalPanel();
 		vp.setSpacing(20);
 		
+		//optional
+		SyntaxHighlighter.init(Themes.RDark);
+		
 		SyntaxHighlighter highlighter = new SyntaxHighlighter(Brushes.XML, "<test>\n  <item></item>\n</test>");
 		
 		vp.add(highlighter);
 		
 		final SyntaxHighlighter highlighter2 = new SyntaxHighlighter(Brushes.JScript, "function myFunction() {\n alert(\"Hello World\")\n}");
+		highlighter2.setWidth("500px");
 		
 		vp.add(highlighter2);
 		

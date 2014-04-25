@@ -17,15 +17,11 @@ public interface BrushResources extends ClientBundle {
 	@Source("shBrushAS3.js")
 	TextResource as3();
 	
-	@Source("shBrushAutoIt.js")
-	TextResource autoIt();
-	
 	@Source("shBrushBash.js")
 	TextResource bash();
-
 	
 	@Source("shBrushColdFusion.js")
-	TextResource coldfusion();
+	TextResource coldFusion();
 	
 	@Source("shBrushCpp.js")
 	TextResource cpp();
@@ -48,6 +44,9 @@ public interface BrushResources extends ClientBundle {
 	@Source("shBrushGroovy.js")
 	TextResource groovy();
 	
+	@Source("shBrushHaxe.js")
+	TextResource haxe();
+	
 	@Source("shBrushJava.js")
 	TextResource java();
 	
@@ -56,9 +55,6 @@ public interface BrushResources extends ClientBundle {
 	
 	@Source("shBrushJScript.js")
 	TextResource jScript();
-	
-	@Source("shBrushLisp.js")
-	TextResource lisp();
 	
 	@Source("shBrushPerl.js")
 	TextResource perl();
@@ -75,9 +71,6 @@ public interface BrushResources extends ClientBundle {
 	@Source("shBrushPython.js")
 	TextResource python();
 	
-	@Source("shBrushRS.js")
-	TextResource rs();
-	
 	@Source("shBrushRuby.js")
 	TextResource ruby();
 	
@@ -87,11 +80,14 @@ public interface BrushResources extends ClientBundle {
 	@Source("shBrushScala.js")
 	TextResource scala();
 	
-	@Source("shBrushScheme.js")
-	TextResource scheme();
-	
 	@Source("shBrushSql.js")
 	TextResource sql();
+	
+	@Source("shBrushTAP.js")
+	TextResource tap();
+	
+	@Source("shBrushTypeScript.js")
+	TextResource typeScript();
 	
 	@Source("shBrushVb.js")
 	TextResource vb();

@@ -56,7 +56,6 @@ public class SyntaxHighlighter extends Widget implements HasText {
 	 */
 	public static void init(Theme theme) {
 		if (!init) {
-			CoreResources.INSTANCE.coreCss().ensureInjected();
 			CoreResources.INSTANCE.gwtFixCss().ensureInjected();
 			
 			CssResource themeCssResource = theme.getThemeCssResource();
@@ -75,6 +74,7 @@ public class SyntaxHighlighter extends Widget implements HasText {
 	
 	private static void loadBrushIfNeeded(Brush brush) {
 		if (!brushesLoaded.contains(brush.getAlias())) {
+			GWT.log("Loading brush <" + brush.getAlias() + ">");
 			TextResource brushJsTextResource = brush.getBrushJsTextResource();
 			if (brushJsTextResource != null) {
 				String brushJs = brushJsTextResource.getText();

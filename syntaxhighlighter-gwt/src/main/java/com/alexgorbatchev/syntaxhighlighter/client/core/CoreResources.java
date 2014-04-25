@@ -13,10 +13,6 @@ public interface CoreResources extends ClientBundle {
 	TextResource coreJavascript();
 	
 	@CssResource.NotStrict
-	@Source("shCore.css")
-	CssResource coreCss();
-	
-	@CssResource.NotStrict
 	@Source("shGWTFix.css")
 	CssResource gwtFixCss();
 }
