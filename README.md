@@ -20,10 +20,29 @@ In YourModule.gwt.xml
 <inherits name='com.alexgorbatchev.syntaxhighlighter.Highlighter'/>
 ```
 
-In Java
+Simple Java
 ```Java
-
 SyntaxHighlighter highlighter = new SyntaxHighlighter(Brushes.XML, "<test>\n  <item></item>\n</test>");
-		
 somePanel.add(highlighter);
 ```
+
+
+Change settings/test
+```Java
+
+//update text
+hightlight.setText("<somexml></somexml>");
+
+//update settings
+highlighter.setFirstLine(4); //starts numbering of lines from 4
+highlighter.setToolbar(false); //remove top bar
+highlighter.setGutter(false); //remove line numbers
+
+
+//call highlight to update settings
+//highlight is called automatically on attach to a panel and when changing text but must be called manually after settings changes
+highlighter.highlight(); 
+
+```
+
+
