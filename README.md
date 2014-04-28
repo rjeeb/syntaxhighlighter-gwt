@@ -1,9 +1,7 @@
 syntaxhighlighter-gwt
 =====================
 
-SyntaxHighlighter-GWT
-
-GWT Wrapper around [SyntaxHighlighter](http://alexgorbatchev.com/SyntaxHighlighter/) by Alex Gorbatchev.  Currently it is based of [SyntaxHighlighter 3.0.9](https://github.com/alexgorbatchev/syntaxhighlighter/releases/tag/v3.0.9).  
+SyntaxHighlighter-GWT is a GWT wrapper around [SyntaxHighlighter](http://alexgorbatchev.com/SyntaxHighlighter/) by Alex Gorbatchev.  Currently it is based of [SyntaxHighlighter 3.0.9](https://github.com/alexgorbatchev/syntaxhighlighter/releases/tag/v3.0.9).  It is an all purpose syntax highlighter for a variety of formats including Javascript/JSON, XML, Java and C++.
 
 Based loosely around https://code.google.com/p/gwt-syntaxhighlighter/.   It has been largely rewritten for simplicity.
 
