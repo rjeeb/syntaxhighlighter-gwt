@@ -32,6 +32,8 @@ public class SyntaxHighlighterGWTTest implements EntryPoint {
 		
 		SyntaxHighlighter highlighter = new SyntaxHighlighter(Brushes.XML, "<test>\n  <item></item>\n</test>");
 		
+		highlighter.setToolbar(false);
+		
 		vp.add(highlighter);
 		
 		final SyntaxHighlighter highlighter2 = new SyntaxHighlighter(Brushes.JScript, "function myFunction() {\n alert(\"Hello World\")\n}");

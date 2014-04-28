@@ -238,9 +238,6 @@ public class SyntaxHighlighter extends Widget implements HasText {
 			strValue = "[" + strValue + "]";
 		}
 		params.put(param, strValue);
-		if (getElement() != null) {
-			setHighlighterParam(highlighterElement.getId(), param.getJsString(), strValue);
-		}
 	}
 	
 	private void makePre(String params, String code) {
@@ -272,21 +269,6 @@ public class SyntaxHighlighter extends Widget implements HasText {
 		String ret = "brush: " + brush.getAlias() + "; " + Param.makeString(params);
 		return ret;
 	}
-	
-	/**
-	 * JSNI method to set the parameter for the SyntaxHighlighter.
-	 * 
-	 * @param id
-	 *            ID of the highlighter element on the page.
-	 * @param param
-	 *            {@link Param#getJsString() JavaScript String} parameter name to be set.
-	 * @param value
-	 *            the parameter's new value to be set to.
-	 */
-	private static native void setHighlighterParam(String id, String param, String value)
-	/*-{
-		SyntaxHighlighter.vars['highlighters'][id].params[param] = value;
-	}-*/;
 	
 	/**
 	 * JSNI method to perform a highlight of the Instance(s) that need to be highlighted.
