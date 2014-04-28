@@ -3,7 +3,7 @@ syntaxhighlighter-gwt
 
 SyntaxHighlighter-GWT
 
-GWT Wrapper around [SyntaxHighlighter system](http://alexgorbatchev.com/SyntaxHighlighter/), provided by Alex Gorbatchev
+GWT Wrapper around [SyntaxHighlighter](http://alexgorbatchev.com/SyntaxHighlighter/) by Alex Gorbatchev.  Currently it is based of [SyntaxHighlighter 3.0.9](https://github.com/alexgorbatchev/syntaxhighlighter/releases/tag/v3.0.9).  
 
 Based loosely around https://code.google.com/p/gwt-syntaxhighlighter/.   It has been largely rewritten for simplicity.
 
