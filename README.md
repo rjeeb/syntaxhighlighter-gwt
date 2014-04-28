@@ -22,6 +22,10 @@ In YourModule.gwt.xml
 
 Simple Java
 ```Java
+//optionally set theme before creating any SyntaxHighlighter
+//otherwise default is used
+SyntaxHighlighter.init(Themes.RDark);
+
 SyntaxHighlighter highlighter = new SyntaxHighlighter(Brushes.XML, "<test>\n  <item></item>\n</test>");
 somePanel.add(highlighter);
 ```
