@@ -16,13 +16,13 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputFiles
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.StopActionException
-import org.gradle.api.tasks.compile.Compile
+import org.gradle.api.tasks.compile.JavaCompile
 
 
 apply plugin: 'war'
 apply plugin: 'jettyEclipse'
 
-project.ext { gwtVersion = '2.6.0' }
+project.ext { gwtVersion = '2.7.0-rc1' }
 
 final File gwtExtraDir = project.file(project.getBuildDir().name + File.separator + "gwt" + File.separator + "extras")
 final File gwtWarDir = project.file(project.getBuildDir().name + File.separator + "gwt" + File.separator + "war")
@@ -65,7 +65,7 @@ configurations.create(GWTConstants.ECLIPSE_EXCLUDE_CONFIGURATION_NAME).
 
 
 project.extensions.eclipse.classpath.containers 'com.google.gwt.eclipse.core.GWT_CONTAINER'
-project.extensions.eclipse.classpath.minusConfigurations += project.configurations.getByName(GWTConstants.ECLIPSE_EXCLUDE_CONFIGURATION_NAME)
+
 project.extensions.eclipse.project.natures 'com.google.gwt.eclipse.core.gwtNature'
 project.extensions.eclipse.project.buildCommand 'com.google.gwt.eclipse.core.gwtProjectValidator'
 
@@ -77,6 +77,14 @@ dependency.setTransitive(false)
 project.configurations.getByName(GWTConstants.GWT_CONFIGURATION_NAME).dependencies.add(dependency)
 project.configurations.getByName(GWTConstants.SUPER_GWT_CONFIGURATION_NAME).dependencies.add(dependency)
 project.configurations.getByName(GWTConstants.ECLIPSE_EXCLUDE_CONFIGURATION_NAME).dependencies.add(dependency)
+
+
+dependency = new DefaultExternalModuleDependency("org.ow2.asm", "asm-all", "5+")
+dependency.setTransitive(false)
+project.configurations.getByName(GWTConstants.GWT_CONFIGURATION_NAME).dependencies.add(dependency)
+project.configurations.getByName(GWTConstants.SUPER_GWT_CONFIGURATION_NAME).dependencies.add(dependency)
+//project.configurations.getByName(GWTConstants.ECLIPSE_EXCLUDE_CONFIGURATION_NAME).dependencies.add(dependency)
+
 
 dependency = new DefaultExternalModuleDependency("com.google.gwt", "gwt-codeserver", gwtVersion)
 dependency.setTransitive(false)
@@ -101,7 +109,10 @@ dependency = new DefaultExternalModuleDependency("com.google.gwt", "gwt-servlet"
 project.configurations.getByName(JavaPlugin.RUNTIME_CONFIGURATION_NAME).dependencies.add(dependency)
 project.configurations.getByName(GWTConstants.ECLIPSE_EXCLUDE_CONFIGURATION_NAME).dependencies.add(dependency)
 
-project.tasks.withType(Compile.class).all { Compile task ->
+
+project.extensions.eclipse.classpath.minusConfigurations.add(project.configurations.getByName(GWTConstants.ECLIPSE_EXCLUDE_CONFIGURATION_NAME))
+
+project.tasks.withType(JavaCompile.class).all { JavaCompile task ->
 	if (task.getClasspath()) {
 		task.setClasspath(task.getClasspath() + project.configurations.getByName(GWTConstants.GWT_CONFIGURATION_NAME))
 	}
@@ -148,8 +159,9 @@ class CompileGwt extends GwtBase {
 	
 	static final String COMPILER_CLASSNAME = 'com.google.gwt.dev.Compiler'
 	static final String GWT_CLASSPATH_ID = 'gwt.classpath'
-	
+
 	String style = 'OBF'
+
 	String logLevel = 'INFO'
 	boolean debug = false
 	boolean disableClassMetadata = false
@@ -166,7 +178,7 @@ class CompileGwt extends GwtBase {
 	Map options = [
 		fork: true,
 		failonerror : true,
-		maxmemory: "512m",
+		maxmemory: "1024m",
 		newEnvironment: false,
 		cloneVm: false
 	]
@@ -189,6 +201,11 @@ class CompileGwt extends GwtBase {
 	@org.gradle.api.tasks.TaskAction
 	def compileGwt() {
 		
+		if (project.hasProperty("gwtStyle")) {
+			style = project.ext.gwtStyle;
+		}
+		logger.warn("Style: " + style);	
+
 		if( modules == null || modules.size == 0 ) {
 			logger.warn("No GWT Modules defined for project " + project.name)
 			throw new StopActionException("No gwt modules specified")
@@ -224,6 +241,7 @@ class CompileGwt extends GwtBase {
 			if (compileReport) arg(line: '-compileReport')
 			if (localWorkers > 1) arg(line: "-localWorkers ${localWorkers}")
 			
+
 			if (disableClassMetadata) arg(line: "-disableClassMetadata")
 			if (disableCastChecking) arg(line: "-XdisableCastChecking")
 			
@@ -241,6 +259,7 @@ class CompileGwt extends GwtBase {
 				logger.info("Compiling GWT Module {}", it)
 				arg(value: it)
 			}
+
 		}
 	}
 }
@@ -261,7 +280,7 @@ class DevMode extends GwtBase {
 	String codePort = '9997'
 	
 	@Input
-	Collection<String> jvmArgs = ['-XX:MaxPermSize=512m']
+	Collection<String> jvmArgs = []
 	
 	@org.gradle.api.tasks.TaskAction
 	public void exec() {
