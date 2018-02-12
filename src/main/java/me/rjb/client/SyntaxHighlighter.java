@@ -2,15 +2,11 @@ package me.rjb.client;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.ScriptInjector;
-import com.google.gwt.dom.client.Document;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.PreElement;
-import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.TextResource;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.HasText;
-import com.google.gwt.user.client.ui.Widget;
+import elemental2.dom.Element;
+import elemental2.dom.HTMLDivElement;
+import elemental2.dom.HTMLPreElement;
 import me.rjb.client.brushes.Brush;
 import me.rjb.client.core.CoreResources;
 import me.rjb.client.themes.Theme;
@@ -19,15 +15,20 @@ import me.rjb.client.themes.Themes;
 import java.util.HashSet;
 import java.util.Map;
 
+import static elemental2.dom.DomGlobal.document;
+import static elemental2.dom.DomGlobal.window;
+
 /**
  * @author Matt Davis
  * based on original code from https://code.google.com/p/gwt-syntaxhighlighter/
  * by
  * @author Xlorep DarkHelm
  */
-public class SyntaxHighlighter extends Widget implements HasText {
+public class SyntaxHighlighter {
 
-    private static boolean init;
+    private static boolean init=false;
+
+    private HTMLDivElement element;
 
     /**
      * Initialize with {@link Themes#Default}
@@ -82,6 +83,10 @@ public class SyntaxHighlighter extends Widget implements HasText {
         }
     }
 
+    public static SyntaxHighlighter create(Brush brush, String text){
+        return new SyntaxHighlighter(brush, text);
+    }
+
     private String text;
     private Map<Param, String> params;
     private Brush brush;
@@ -98,78 +103,76 @@ public class SyntaxHighlighter extends Widget implements HasText {
         this.brush = brush;
         loadBrushIfNeeded(brush);
 
-        setElement(Document.get().createDivElement());
+        element= (HTMLDivElement) document.createElement("div");
 
-        addAttachHandler(new AttachEvent.Handler() {
-            @Override
-            public void onAttachOrDetach(final AttachEvent event) {
 
-                if (event.isAttached()) {
-                    highlight();
-                }
-            }
-        });
     }
 
     public Brush getBrush() {
         return brush;
     }
 
-    @Override
     public String getText() {
         return text;
     }
 
-    @Override
-    public void setText(String text) {
+    public SyntaxHighlighter setText(String text) {
         setText(text, true);
+        return this;
     }
 
-    public void setText(String text, boolean highlight) {
+    public SyntaxHighlighter setText(String text, boolean highlight) {
         this.text = text;
         if (highlight) {
             highlight();
         }
+
+        return this;
     }
 
     public boolean isAutoLinks() {
         return Boolean.valueOf(params.get(Param.AUTO_LINKS));
     }
 
-    public void setAutoLinks(boolean autoLinks) {
+    public SyntaxHighlighter setAutoLinks(boolean autoLinks) {
         setParam(Param.AUTO_LINKS, autoLinks);
+        return this;
     }
 
     public String getClassName() {
         return params.get(Param.CLASS_NAME);
     }
 
-    public void setClassName(String className) {
+    public SyntaxHighlighter setClassName(String className) {
         setParam(Param.CLASS_NAME, className);
+        return this;
     }
 
     public boolean isCollapse() {
         return Boolean.valueOf(params.get(Param.COLLAPSE));
     }
 
-    public void setCollapse(boolean collapse) {
+    public SyntaxHighlighter setCollapse(boolean collapse) {
         setParam(Param.COLLAPSE, collapse);
+        return this;
     }
 
     public int getFirstLine() {
         return Integer.valueOf(params.get(Param.FIRST_LINE));
     }
 
-    public void setFirstLine(int firstLine) {
+    public SyntaxHighlighter setFirstLine(int firstLine) {
         setParam(Param.FIRST_LINE, firstLine);
+        return this;
     }
 
     public boolean isGutter() {
         return Boolean.valueOf(params.get(Param.GUTTER));
     }
 
-    public void setGutter(boolean gutter) {
+    public SyntaxHighlighter setGutter(boolean gutter) {
         setParam(Param.GUTTER, gutter);
+        return this;
     }
 
     public boolean isHtmlScript() {
@@ -180,52 +183,47 @@ public class SyntaxHighlighter extends Widget implements HasText {
         return Boolean.valueOf(params.get(Param.SMART_TABS));
     }
 
-    public void setSmartTabs(boolean smartTabs) {
+    public SyntaxHighlighter setSmartTabs(boolean smartTabs) {
         setParam(Param.SMART_TABS, smartTabs);
+        return this;
     }
 
     public int getTabSize() {
         return Integer.valueOf(params.get(Param.TAB_SIZE));
     }
 
-    public void setTabSize(int tabSize) {
+    public SyntaxHighlighter setTabSize(int tabSize) {
         setParam(Param.TAB_SIZE, tabSize);
+        return this;
     }
 
     public boolean isToolbar() {
         return Boolean.valueOf(params.get(Param.TOOLBAR));
     }
 
-    public void setToolbar(boolean toolbar) {
+    public SyntaxHighlighter setToolbar(boolean toolbar) {
         setParam(Param.TOOLBAR, toolbar);
+        return this;
     }
 
-    @Override
-    public String getTitle() {
-        return params.get(Param.TITLE);
-    }
-
-    @Override
-    public void setTitle(String title) {
-        setParam(Param.TITLE, title);
-    }
-
-    public void highlight() {
+    public SyntaxHighlighter highlight() {
 
         if (text != null && !text.trim().isEmpty()) {
             makePre(createParams(), text);
 
-            Element newElement = getElement().getFirstChildElement();
+            elemental2.dom.Element newElement = element.firstElementChild;
             doHighlight(newElement);
-            newElement = getElement().getFirstChildElement();
+            newElement = element.firstElementChild;
 
-            if (newElement.hasChildNodes() && newElement.getFirstChildElement().getId().startsWith("highlighter_")) {
-                this.highlighterElement = newElement.getFirstChildElement();
+            if (newElement.hasChildNodes() && newElement.firstElementChild.getAttribute("id").startsWith("highlighter_")) {
+                this.highlighterElement = newElement.firstElementChild;
                 replElement(highlighterElement);
             } else {
                 GWT.log("Failed to highlight element");
             }
         }
+
+        return this;
     }
 
     private void setParam(Param param, Object value) {
@@ -238,21 +236,21 @@ public class SyntaxHighlighter extends Widget implements HasText {
     }
 
     private void makePre(String params, String code) {
-        PreElement pre = Document.get().createPreElement();
-        if (Window.Navigator.getUserAgent().contains("msie") || Window.Navigator.getUserAgent().contains("MSIE")) {
+        HTMLPreElement pre = (HTMLPreElement) document.createElement("pre");
+        if (window.navigator.userAgent.contains("msie") || window.navigator.userAgent.contains("MSIE")) {
             code = code.replace("\r\n", "\n").replace("\n", "\r\n");
 
         }
-        pre.setInnerHTML(code.replace("<", "&lt;"));
-        pre.setClassName(params);
+        pre.innerHTML=code.replace("<", "&lt;");
+        pre.classList.add(params);
         replElement(pre);
     }
 
     private void replElement(Element element) {
-        if (getElement().hasChildNodes()) {
-            getElement().replaceChild(element, getElement().getFirstChild());
+        if (this.element.hasChildNodes()) {
+            this.element.replaceChild(element, this.element.firstChild);
         } else {
-            getElement().appendChild(element);
+            this.element.appendChild(element);
         }
     }
 
@@ -262,8 +260,12 @@ public class SyntaxHighlighter extends Widget implements HasText {
      * @return the {@code <div>} element's parameters.
      */
     private String createParams() {
-        String ret = "brush: " + brush.getAlias() + "; " + Param.makeString(params);
+        String ret = "brush:" + brush.getAlias() + ";" + Param.makeString(params);
         return ret;
+    }
+
+    public HTMLDivElement getElement() {
+        return element;
     }
 
     /**

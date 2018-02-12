@@ -9,34 +9,34 @@ public interface ThemeResources extends ClientBundle {
 	public final static ThemeResources INSTANCE = GWT.create(ThemeResources.class);
 	
 	@CssResource.NotStrict
-	@Source("shThemeDefault.css")
+	@Source("shThemeDefault.gss")
     CssResource defaultCss();
 	
 	@CssResource.NotStrict
-	@Source("shThemeDjango.css")
+	@Source("shThemeDjango.gss")
     CssResource djangoCss();
 	
 	@CssResource.NotStrict
-	@Source("shThemeEclipse.css")
+	@Source("shThemeEclipse.gss")
     CssResource eclipseCss();
 	
 	@CssResource.NotStrict
-	@Source("shThemeEmacs.css")
+	@Source("shThemeEmacs.gss")
     CssResource emacsCss();
 	
 	@CssResource.NotStrict
-	@Source("shThemeFadeToGrey.css")
+	@Source("shThemeFadeToGrey.gss")
     CssResource fadeToGreyCss();
 	
 	@CssResource.NotStrict
-	@Source("shThemeMDUltra.css")
+	@Source("shThemeMDUltra.gss")
     CssResource mdUltraCss();
 	
 	@CssResource.NotStrict
-	@Source("shThemeMidnight.css")
+	@Source("shThemeMidnight.gss")
     CssResource midnightCss();
 	
 	@CssResource.NotStrict
-	@Source("shThemeRDark.css")
+	@Source("shThemeRDark.gss")
     CssResource rDarkCss();
 }

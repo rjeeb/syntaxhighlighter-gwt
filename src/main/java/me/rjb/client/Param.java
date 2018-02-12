@@ -64,7 +64,7 @@ enum Param {
 			return "";
 		}
 		else {
-			return jsString + ": " + value + ";";
+			return jsString + ":" + value + ";";
 		}
 	}
 	
@@ -143,7 +143,7 @@ enum Param {
 		for (Entry<Param, String> entry : params.entrySet()) {
 			if (builder.length() > 0) {
 				
-				builder.append(" ");
+				builder.append("");
 			}
 			builder.append(entry.getKey().makeString(entry.getValue()));
 		}

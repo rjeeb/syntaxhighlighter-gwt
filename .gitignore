@@ -5,6 +5,9 @@ build
 .gradle
 .project
 .settings
+.idea
+*/target/**
+*.iml
 classes
 syntaxhighlighter-gwt-test/war/WEB-INF/lib/
 syntaxhighlighter-gwt-test/gwt-unitCache/
